@@ -7,8 +7,5 @@
 
 for i in *
 do
-	if [[ -e $i ]]
-	then
-		echo "$i"
-	fi
+	echo "$i"
 done
