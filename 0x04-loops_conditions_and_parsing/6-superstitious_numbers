@@ -12,15 +12,13 @@ do
 	echo "$x"
 	case "$x" in
 		4)
-			echo "bad luck from china"
+			echo "bad luck from China"
 			;;
 		9)
 			echo "bad luck from Japan"
 			;;
 		17)
 			echo "bad luck from Italy"
-			;;
-		*)
 			;;
 	esac
 	(( x++ ))
