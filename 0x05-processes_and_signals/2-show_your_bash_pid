@@ -2,4 +2,12 @@
 #Bash script that displays lines containing the bash word
 # shellcheck disable=SC2009
 
-ps -axuf
+output=$(ps -axuf)
+
+while read -r line
+do
+	if echo "$line" | grep -q 'bash'
+	then
+		echo "$line"
+	fi
+done <"$output"
