@@ -2,9 +2,8 @@
 #Bash script that displays the content of the file /etc/passwd, using
 #the while loop + IFS.
 
-IFS=$'\n'
-
-while read -r line
+while IFS=":" read -r USER PASS USERID GRPID UIDI HOME_DIR CMD
 do
-	echo "$line"
+	echo "The user $USER is part of the $GRPID gang, lives in $HOME_DIR and rides $CMD. $USERID's place is protected by the passcode $PASS, more info about the user here: $UIDI"
+
 done <"/etc/passwd"
