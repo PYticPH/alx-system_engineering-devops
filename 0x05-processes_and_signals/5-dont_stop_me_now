@@ -5,5 +5,5 @@ pcs="$( pgrep -f ./4-to_infinity_and_beyond )"
 
 if [[ -n $pcs ]]
 then
-	kill $pcs
+	kill "$pcs"
 fi
