@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#Write a Bash script that stops 4-to_infinity_and_beyond process
+
+pcs="$( pgrep -f ./4-to_infinity_and_beyond )"
+
+if [[ -n $pcs ]]
+then
+	kill $pcs
+fi
