@@ -29,21 +29,27 @@ then
 			$dmn &
 			if [[ -n "$!" ]]
 			then
-				echo "$!" >> $pidlog
+				echo "$!" > $pidlog
 				echo "manage_my_process started"
 			fi
 			;;
 		"stop")
-			pkill -f $dmn
-			rm -f $pidlog
-			echo "manage_my_process stopped"
+			if [[ -n $( pgrep -f $dmn) ]]
+			then
+				pkill -f $dmn
+				rm $pidlog
+				echo "manage_my_process stopped"
+			fi
 			;;
 		"restart")
-			pkill -f $dmn
-			sudo rm -f $pidlog
-			$dmn &
-			echo "$!" >> $pidlog
-			echo "manage_my_process restarted"
+			if [[ -n $( pgrep -f $dmn) ]]
+			then
+				pkill -f $dmn
+				rm $pidlog
+				$dmn &
+				echo "$!" > $pidlog
+				echo "manage_my_process restarted"
+			fi
 			;;
 		*)
 			echo "Usage: manage_my_process {start|stop|restart}"
