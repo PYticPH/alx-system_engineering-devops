@@ -7,5 +7,5 @@
 #Display in a user-oriented format
 #Show process hierarchy
 
-ps -axuf | grep -eo 'bash'
+ps -axuf
 
