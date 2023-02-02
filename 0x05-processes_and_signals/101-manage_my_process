@@ -34,22 +34,16 @@ then
 			fi
 			;;
 		"stop")
-			if [[ -n $( pgrep -f $dmn) ]]
-			then
-				pkill -f $dmn
-				rm $pidlog
-				echo "manage_my_process stopped"
-			fi
+			pkill -f $dmn
+			rm -f $pidlog
+			echo "manage_my_process stopped"
 			;;
 		"restart")
-			if [[ -n $( pgrep -f $dmn) ]]
-			then
-				pkill -f $dmn
-				rm $pidlog
-				$dmn &
-				echo "$!" >> $pidlog
-				echo "manage_my_process restarted"
-			fi
+			pkill -f $dmn
+			sudo rm -f $pidlog
+			$dmn &
+			echo "$!" >> $pidlog
+			echo "manage_my_process restarted"
 			;;
 		*)
 			echo "Usage: manage_my_process {start|stop|restart}"
