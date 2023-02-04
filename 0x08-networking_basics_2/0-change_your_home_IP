@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+#Bash script that configures an Ubuntu server with the below requirements.
+#
+#Requirements:
+#
+#localhost resolves to 127.0.0.2
+#facebook.com resolves to 8.8.8.8
+
+hosts_dir="/etc/hosts"
+
+touch ~/hosts_db
+if [[ -e ~/hosts_db ]]
+then
+	echo -e "127.0.0.2\tlocalhost" >> ~/hosts_db
+	echo -e "8.8.8.8\tfacebook.com" >> ~/hosts_db
+	if [[ -n ~/hosts_db ]]
+	then
+		cp -f ~/hosts_db $hosts_dir
+	fi
+fi
