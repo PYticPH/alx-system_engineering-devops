@@ -9,5 +9,7 @@
 #Ordered from the greatest to the lowest number of occurrences
 
 snf="$( awk '{print $1 " " $9}' ./apache-access.log)"
-
-echo "$snf" | sort | uniq -c | sort -nr
+if [[ -n $snf ]]
+then
+	echo "$snf" | sort | uniq -c | sort -nr
+fi
