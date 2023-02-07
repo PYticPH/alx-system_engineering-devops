@@ -8,16 +8,6 @@
 #In list format
 #Ordered from the greatest to the lowest number of occurrences
 
-awk '{
-  a[$1" "$9]++
-}
-END {
-  for (i in a)
-    print a[i], i
-}' ./apache-access.log | sort -nr | awk '{
-  if (!($2" "$3 in b)) {
-    print $1,$2,$3
-    b[$2" "$3]=1
-  }
-}'
+snf="$( awk '{print $1 " " $9}' ./apache-access.log)"
 
+echo "$snf" | sort | uniq -c | sort -nr
