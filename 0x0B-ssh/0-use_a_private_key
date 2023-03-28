@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
+# bash script to connect to remote server using keys
 
 ssh -i ~/.ssh/school ubuntu@35.175.104.122
