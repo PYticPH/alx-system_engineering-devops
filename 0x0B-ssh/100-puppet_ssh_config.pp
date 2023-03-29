@@ -1,8 +1,10 @@
 # set ssh config
 
-file {'/etc/ssh/ssh_config':
-ensure  => present,
-content => 'PasswordAuthentication no\nHostKey ~/.ssh/school',
-path    => '/etc/ssh/ssh_config',
-mode    => '0744',
+include stdlib
+file_line { 'ssh_config':
+ensure => present,
+path   => '/etc/ssh/ssh_config',
+line   => "    PasswordAuthentication no\n    IdentityFile ~/.ssh/school",
+match  => '#?\s+PasswordAuthentication\s+yes',
+append_on_no_match => false,
 }
