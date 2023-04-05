@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Install and Configure nginx
+
+# install nginx
+
+if command -v nginx &> /dev/null
+then
+  echo "nginx is already installed"
+else
+  sudo apt-get install -y nginx
+  if command -v nginx &> /dev/null
+    then
+      echo " nginx installed successfully"
+    else
+      echo " An error occur while trying to install nginx"
+      exit 1
+  fi
+fi
+
+# create server test page
+echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
+echo "done!"
