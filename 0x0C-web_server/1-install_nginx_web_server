@@ -9,8 +9,8 @@ dconfig="/etc/nginx/sites-enabled/default"
 apt-get install -y nginx
 
 # create webpage directory
+
 mkdir -p $web_dir
-chown -R "$USER":"$USER" $web_dir
 
 # set web directory root permission
 
