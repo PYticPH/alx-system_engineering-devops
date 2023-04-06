@@ -8,7 +8,7 @@ if command -v nginx &> /dev/null
 then
   echo "nginx is already installed"
 else
-  sudo apt-get install -y nginx
+  apt-get install -y nginx
   if command -v nginx &> /dev/null
     then
       echo " nginx installed successfully"
@@ -23,9 +23,9 @@ fi
 if [[ ! -d $web_dir ]]
 then
   echo "Creating web directory..."
-  sudo mkdir -p $web_dir
+  mkdir -p $web_dir
   echo "changing web directory owner to user"
-  sudo chown -R "$USER":"$USER" $web_dir
+  chown -R "$USER":"$USER" $web_dir
 else
   echo "web directory already exist"
 fi
@@ -35,7 +35,7 @@ fi
 if [[ $(stat -c '%a' "/var/www") -ne 755 ]]
 then
   echo "changing web root permission"
-  sudo chmod -R 755 /var/www
+  chmod -R 755 /var/www
   echo "web root permission changed"
 fi
 
@@ -58,22 +58,22 @@ echo -e "server {
         location / {
                 try_files \$uri \$uri/ =404;
         }
-}" | sudo tee 1> /dev/null "/etc/nginx/sites-available/pyticph.tech"
+}" | tee 1> /dev/null "/etc/nginx/sites-available/pyticph.tech"
 echo "server block file created"
 
 #enable server block
 echo "enabling server block"
-sudo ln -s /etc/nginx/sites-available/pyticph.tech /etc/nginx/sites-enabled/
+ln -s /etc/nginx/sites-available/pyticph.tech /etc/nginx/sites-enabled/
 echo "server block enabled"
 
 #disable default block
 echo "unlinking default block"
-sudo unlink /etc/nginx/sites-enabled/default
+unlink /etc/nginx/sites-enabled/default
 echo "default block unlinked"
 
 #restart nginx
 echo "restarting nginx"
-sudo service nginx restart
+service nginx restart
 echo "nginx restarted"
 
 echo "All done!"
