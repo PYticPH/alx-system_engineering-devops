@@ -6,54 +6,25 @@ dconfig="/etc/nginx/sites-enabled/default"
 
 # install nginx
 
-if command -v nginx &> /dev/null
-then
-  echo "nginx is already installed"
-else
-  apt-get install -y nginx
-  if command -v nginx &> /dev/null
-    then
-      echo " nginx installed successfully"
-    else
-      echo " An error occur while trying to install nginx"
-      exit 1
-  fi
-fi
+apt-get install -y nginx
 
 # create webpage directory
+mkdir -p $web_dir
+chown -R "$USER":"$USER" $web_dir
 
-if [[ ! -d $web_dir ]]
-then
-  echo "Creating web directory..."
-  mkdir -p $web_dir
-  echo "changing web directory owner to user"
-  chown -R "$USER":"$USER" $web_dir
-else
-  echo "web directory already exist"
-fi
+# set web directory root permission
 
-#set web directory root permission
+chmod -R 755 /var/www
 
-if [[ $(stat -c '%a' "/var/www") -ne 755 ]]
-then
-  echo "changing web root permission"
-  chmod -R 755 /var/www
-  echo "web root permission changed"
-fi
+# create sample page
 
-#create sample page
-echo "creating sample page"
 echo "Hello World!" > "$web_dir/index.html"
-echo "sample page created"
 
 #edit default nginx config
 
 sed -i 's/root \/var\/www\/html;/root \/var\/www\/pyticph.tech\/html;/g' $dconfig
 sed -i 's/server_name _;/server_name www.pyticph.tech pyticph.tech;/g' $dconfig
 
-#restart nginx
-echo "restarting nginx"
-service nginx restart
-echo "nginx restarted"
+# restart nginx
 
-echo "All done!"
+service nginx restart
