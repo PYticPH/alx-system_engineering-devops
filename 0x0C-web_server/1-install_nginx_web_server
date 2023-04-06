@@ -1,29 +1,13 @@
 #!/usr/bin/env bash
 # Install and Configure nginx
 
-web_dir="/var/www/pyticph.tech/html"
-dconfig="/etc/nginx/sites-enabled/default"
-
 # install nginx
 
 apt-get install -y nginx
 
-# create webpage directory
-
-mkdir -p $web_dir
-
-# set web directory root permission
-
-chmod -R 755 /var/www
-
 # create sample page
 
-echo "Hello World!" > "$web_dir/index.html"
-
-#edit default nginx config
-
-sed -i 's/root \/var\/www\/html;/root \/var\/www\/pyticph.tech\/html;/g' $dconfig
-sed -i 's/server_name _;/server_name www.pyticph.tech pyticph.tech;/g' $dconfig
+echo "Hello World!" > /var/www/html/index.nginx-debian.html
 
 # restart nginx
 
