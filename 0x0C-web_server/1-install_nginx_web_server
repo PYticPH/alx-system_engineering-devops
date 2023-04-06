@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Install and Configure nginx
 
+web_dir="/var/www/pyticph.tech/html"
 # install nginx
 
 if command -v nginx &> /dev/null
@@ -17,6 +18,62 @@ else
   fi
 fi
 
-# create server test page
-echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
-echo "done!"
+# create webpage directory
+
+if [[ ! -d $web_dir ]]
+then
+  echo "Creating web directory..."
+  sudo mkdir -p $web_dir
+  echo "changing web directory owner to user"
+  sudo chown -R "$USER":"$USER" $web_dir
+else
+  echo "web directory already exist"
+fi
+
+#set web directory root permission
+
+if [[ $(stat -c '%a' "/var/www") -ne 755 ]]
+then
+  echo "changing web root permission"
+  sudo chmod -R 755 /var/www
+  echo "web root permission changed"
+fi
+
+#create sample page
+echo "creating sample page"
+echo "Hello World!" > "$web_dir/index.html"
+echo "sample page created"
+
+#create server block file
+echo "creating server block file"
+echo -e "server {
+        listen 80;
+        listen [::]:80;
+
+        root $web_dir;
+        index index.html;
+
+        server_name www.pyticph.tech pyticph.tech;
+
+        location / {
+                try_files \$uri \$uri/ =404;
+        }
+}" | sudo tee 1> /dev/null "/etc/nginx/sites-available/pyticph.tech"
+echo "server block file created"
+
+#enable server block
+echo "enabling server block"
+sudo ln -s /etc/nginx/sites-available/pyticph.tech /etc/nginx/sites-enabled/
+echo "server block enabled"
+
+#disable default block
+echo "unlinking default block"
+sudo unlink /etc/nginx/sites-enabled/default
+echo "default block unlinked"
+
+#restart nginx
+echo "restarting nginx"
+sudo service nginx restart
+echo "nginx restarted"
+
+echo "All done!"
