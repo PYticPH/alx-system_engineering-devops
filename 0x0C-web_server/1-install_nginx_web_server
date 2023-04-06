@@ -2,6 +2,8 @@
 # Install and Configure nginx
 
 web_dir="/var/www/pyticph.tech/html"
+dconfig="/etc/nginx/sites-enabled/default"
+
 # install nginx
 
 if command -v nginx &> /dev/null
@@ -44,32 +46,10 @@ echo "creating sample page"
 echo "Hello World!" > "$web_dir/index.html"
 echo "sample page created"
 
-#create server block file
-echo "creating server block file"
-echo -e "server {
-        listen 80;
-        listen [::]:80;
+#edit default nginx config
 
-        root $web_dir;
-        index index.html;
-
-        server_name www.pyticph.tech pyticph.tech;
-
-        location / {
-                try_files \$uri \$uri/ =404;
-        }
-}" | tee 1> /dev/null "/etc/nginx/sites-available/pyticph.tech"
-echo "server block file created"
-
-#enable server block
-echo "enabling server block"
-ln -s /etc/nginx/sites-available/pyticph.tech /etc/nginx/sites-enabled/
-echo "server block enabled"
-
-#disable default block
-echo "unlinking default block"
-unlink /etc/nginx/sites-enabled/default
-echo "default block unlinked"
+sed -i 's/root \/var\/www\/html;/root \/var\/www\/pyticph.tech\/html;/g' $dconfig
+sed -i 's/server_name _;/server_name www.pyticph.tech pyticph.tech;/g' $dconfig
 
 #restart nginx
 echo "restarting nginx"
