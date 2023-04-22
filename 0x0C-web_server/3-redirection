@@ -4,6 +4,18 @@
 file="/etc/nginx/sites-enabled/default"
 rep="server_name _;\n\trewrite \^\/redirect_me\$ https:\/\/youtube\.com permanent"
 
+# update repo
+
+apt-get update
+
+# install nginx
+
+apt-get install -y nginx
+
+# create sample page
+
+echo "Hello World!" >/var/www/html/index.nginx-debian.html
+
 sed -i "s/server_name\s_/$rep/" $file
 
 #restart nginx
