@@ -4,9 +4,6 @@
 file="/etc/nginx/sites-enabled/default"
 rep="server_name _;\n\tlocation \/redirect_me \{\n\t\trewrite \^\/redirect_me https:\/\/www\.youtube\.com permanent;\n\t\}"
 
-#uninstall existing nginx configuration
-apt-get --purge remove -y nginx && apt-get --purge autoremove -y
-
 #update repo
 apt-get update
 
